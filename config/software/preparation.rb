@@ -15,15 +15,15 @@
 # limitations under the License.
 #
 
-name "preparation"
-description "the steps required to prepare the build"
+name 'preparation'
+description 'the steps required to prepare the build'
 default_version '1.0.0'
 
 sudome
 
 build do
   block do
-    %w{embedded/lib embedded/bin bin}.each do |dir|
+    %w(embedded/lib embedded/bin bin).each do |dir|
       dir_fullpath = File.expand_path(File.join(install_dir, dir))
       FileUtils.mkdir_p(dir_fullpath)
       FileUtils.touch(File.join(dir_fullpath, '.gitkeep'))
@@ -31,8 +31,6 @@ build do
   end
 end
 
-def sudome do
-  unless ENV['USER'] == 'root'
-    exec("sudo #{ENV['_']} #{ARGV.join(' ')}")
-  end
+def sudome
+  exec("sudo #{ENV['_']} #{ARGV.join(' ')}") unless ENV['USER'] == 'root'
 end
