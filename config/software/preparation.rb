@@ -19,16 +19,17 @@ name 'preparation'
 description 'the steps required to prepare the build'
 default_version '1.0.0'
 
-build do
-  block do
-    %w(embedded/lib embedded/bin bin).each do |dir|
-      dir_fullpath = File.expand_path(File.join(install_dir, dir))
-      sudome(FileUtils.mkdir_p(dir_fullpath))
-      sudome(FileUtils.touch(File.join(dir_fullpath, '.gitkeep')))
-    end
-  end
-end
-
 def sudome
   exec("sudo #{ENV['_']} #{ARGV.join(' ')}") unless ENV['USER'] == 'root'
+end
+
+build do
+  block do
+    sudome
+    %w(embedded/lib embedded/bin bin).each do |dir|
+      dir_fullpath = File.expand_path(File.join(install_dir, dir))
+      FileUtils.mkdir_p(dir_fullpath)
+      FileUtils.touch(File.join(dir_fullpath, '.gitkeep'))
+    end
+  end
 end
