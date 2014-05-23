@@ -21,6 +21,7 @@ default_version '1.0.0'
 
 def sudome
   exec("sudo #{ENV['_']} #{ARGV.join(' ')}") unless ENV['USER'] == 'root'
+  puts "sudo #{ENV['_']} #{ARGV.join(' ')}"
 end
 
 build do
