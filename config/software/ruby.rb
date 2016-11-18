@@ -30,7 +30,6 @@ default_version "2.3.1"
 
 fips_enabled = (project.overrides[:fips] && project.overrides[:fips][:enabled]) || false
 
-dependency "ncurses" unless windows? || version.satisfies?(">= 2.1")
 dependency "zlib"
 dependency "openssl"
 dependency "libffi"
