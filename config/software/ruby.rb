@@ -24,7 +24,6 @@ skip_transitive_dependency_licensing true
 
 default_version "2.1.8"
 
-dependency "ncurses" unless windows? || version.satisfies?(">= 2.1")
 dependency "zlib"
 dependency "openssl"
 dependency "libffi"
