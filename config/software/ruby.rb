@@ -30,7 +30,6 @@ default_version "2.3.1"
 
 fips_enabled = (project.overrides[:fips] && project.overrides[:fips][:enabled]) || false
 
-dependency "ncurses" unless windows? || version.satisfies?(">= 2.1")
 dependency "zlib"
 dependency "openssl"
 dependency "libffi"
@@ -80,7 +79,7 @@ if mac_os_x?
   # would be harmless, except that autoconf treats any output to stderr as
   # a failure when it makes a test program to check your CFLAGS (regardless
   # of the actual exit code from the compiler).
-  env["CFLAGS"] << " -I#{install_dir}/embedded/include/ncurses -arch x86_64 -m64 -O3 -g -pipe -Qunused-arguments"
+  env["CFLAGS"] << " -arch x86_64 -m64 -O3 -g -pipe -Qunused-arguments"
   env["LDFLAGS"] << " -arch x86_64"
 elsif freebsd?
   # Stops "libtinfo.so.5.9: could not read symbols: Bad value" error when
@@ -93,11 +92,11 @@ elsif freebsd?
 elsif aix?
   # this magic per IBM
   env["LDSHARED"] = "xlc -G"
-  env["CFLAGS"] = "-I#{install_dir}/embedded/include/ncurses -I#{install_dir}/embedded/include"
+  env["CFLAGS"] = "-I#{install_dir}/embedded/include"
   # this magic per IBM
   env["XCFLAGS"] = "-DRUBY_EXPORT"
   # need CPPFLAGS set so ruby doesn't try to be too clever
-  env["CPPFLAGS"] = "-I#{install_dir}/embedded/include/ncurses -I#{install_dir}/embedded/include"
+  env["CPPFLAGS"] = "-I#{install_dir}/embedded/include"
   env["SOLIBS"] = "-lm -lc"
   # need to use GNU m4, default m4 doesn't work
   env["M4"] = "/opt/freeware/bin/m4"
